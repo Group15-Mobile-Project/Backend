@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import airbnb.com.backend1.Entity.Booking;
 import airbnb.com.backend1.Entity.Home;
 import airbnb.com.backend1.Entity.Host;
+import airbnb.com.backend1.Entity.Notify;
 import airbnb.com.backend1.Entity.TenantReview;
 import airbnb.com.backend1.Entity.Users;
+import airbnb.com.backend1.Entity.Enums.NotifyStatus;
 import airbnb.com.backend1.Entity.Request.TenantReviewRequest;
 import airbnb.com.backend1.Entity.Response.TenantReviewResponse;
 import airbnb.com.backend1.Exception.BadResultException;
@@ -22,6 +24,7 @@ import airbnb.com.backend1.Mapper.TenantReviewMapper;
 import airbnb.com.backend1.Repository.BookingRepos;
 import airbnb.com.backend1.Repository.HomeRepos;
 import airbnb.com.backend1.Repository.HostRepos;
+import airbnb.com.backend1.Repository.NotifyRepos;
 import airbnb.com.backend1.Repository.TenantReviewRepos;
 import airbnb.com.backend1.Repository.UserRepos;
 import airbnb.com.backend1.Service.TenantReviewService;
@@ -40,6 +43,9 @@ public class TenantReviewServiceIml implements TenantReviewService {
     BookingRepos bookingRepos;
     @Autowired
     TenantReviewMapper mapper;
+    @Autowired
+    NotifyRepos notifyRepos;
+
     @Override
     public TenantReviewResponse getById(Long id) {
        Optional<TenantReview> entity = reviewRepos.findById(id);
@@ -112,11 +118,18 @@ public class TenantReviewServiceIml implements TenantReviewService {
         host.getTenantReviews().add(review);
         home.getTenantReviews().add(review);
         booking.setTenantReview(review);
+        bookingRepos.save(booking);
 
+        Notify notify = new Notify(NotifyStatus.TENANT_REVIEW, tenant, host, home, booking, false);
+        notifyRepos.save(notify);
+        
+        tenant.getNotifies().add(notify);
+        host.getNotifies().add(notify);
+        home.getNotifies().add(notify);
+
+        userRepos.save(tenant);
         homeRepos.save(home);
         hostRepos.save(host);
-        bookingRepos.save(booking);
-        userRepos.save(tenant);
 
         return mapper.mapTenantReviewToRespose(review);
 

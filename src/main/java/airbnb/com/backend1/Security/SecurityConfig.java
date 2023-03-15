@@ -49,6 +49,7 @@ public class SecurityConfig {
         http
         .authorizeHttpRequests()
         .requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
+        .requestMatchers( "/api/images/**").permitAll()
         .anyRequest().authenticated()
         .and()
         .addFilterBefore(filterException, filterAuthentication.getClass())

@@ -147,6 +147,10 @@ public class Home {
     @OneToMany(mappedBy = "home", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<TenantReview> tenantReviews = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "home", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Notify> notifies = new ArrayList<>();
+
 
     public Home( String title, Double price, String address, City city, Country country, String latitude, String longtitude, String zipcode, List<String> imgUrls, LocalDate openBooking, LocalDate closeBooking, int beds, int bedrooms, int capacity, HomeCategory homeCategory,  Host owner) {
         this.title = title;

@@ -43,6 +43,10 @@ public class Host {
     @OneToMany(mappedBy = "host", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<TenantReview> tenantReviews = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "host", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Notify> notifies = new ArrayList<>();
+
     public Host(Users user) {
         this.user = user;
     }

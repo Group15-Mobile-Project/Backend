@@ -12,7 +12,10 @@ import org.springframework.stereotype.Service;
 import airbnb.com.backend1.Entity.Booking;
 import airbnb.com.backend1.Entity.Home;
 import airbnb.com.backend1.Entity.HomeReview;
+import airbnb.com.backend1.Entity.Host;
+import airbnb.com.backend1.Entity.Notify;
 import airbnb.com.backend1.Entity.Users;
+import airbnb.com.backend1.Entity.Enums.NotifyStatus;
 import airbnb.com.backend1.Entity.Request.HomeReviewRequest;
 import airbnb.com.backend1.Entity.Response.HomeReviewResponse;
 import airbnb.com.backend1.Exception.BadResultException;
@@ -22,6 +25,8 @@ import airbnb.com.backend1.Mapper.HomeReviewMapper;
 import airbnb.com.backend1.Repository.BookingRepos;
 import airbnb.com.backend1.Repository.HomeRepos;
 import airbnb.com.backend1.Repository.HomeReviewRepos;
+import airbnb.com.backend1.Repository.HostRepos;
+import airbnb.com.backend1.Repository.NotifyRepos;
 import airbnb.com.backend1.Repository.UserRepos;
 import airbnb.com.backend1.Service.HomeReviewService;
 
@@ -37,6 +42,11 @@ public class HomeReviewServiceIml implements HomeReviewService {
     HomeReviewRepos homeReviewRepos;
     @Autowired
     HomeReviewMapper mapper;
+    @Autowired
+    NotifyRepos notifyRepos;
+    @Autowired
+    HostRepos hostRepos;
+
     @Override
     public HomeReviewResponse getReviewById(Long id) {
         Optional<HomeReview> entity = homeReviewRepos.findById(id);
@@ -116,7 +126,7 @@ public class HomeReviewServiceIml implements HomeReviewService {
 
         authUser.getHomeReviews().add(review);
         booking.setHomeReview(review);
-        userRepos.save(authUser);
+        // userRepos.save(authUser);
         bookingRepos.save(booking);
         
         Double avgRating;
@@ -129,7 +139,19 @@ public class HomeReviewServiceIml implements HomeReviewService {
         home.setRating(avgRating);
         home.setReviewNums(home.getReviewNums() + 1);
         home.getHomeReviews().add(review);
+        // homeRepos.save(home);
+
+        Host host = home.getOwner();
+        Notify notify = new Notify(NotifyStatus.HOME_REVIEW, authUser, host, home, booking, false);
+        notifyRepos.save(notify);
+        
+        authUser.getNotifies().add(notify);
+        host.getNotifies().add(notify);
+        home.getNotifies().add(notify);
+
+        userRepos.save(authUser);
         homeRepos.save(home);
+        hostRepos.save(host);
 
         return mapper.mapHomeReviewToRes(review);
     }

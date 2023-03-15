@@ -74,6 +74,14 @@ public class Users {
     @OneToMany(mappedBy = "tenant", cascade = CascadeType.ALL, fetch =  FetchType.LAZY)
     private List<TenantReview> tenantReviews = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "tenant", cascade =  CascadeType.ALL, fetch =  FetchType.LAZY)
+    private List<Notify> notifies = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade =  CascadeType.ALL, fetch =  FetchType.LAZY)
+    private List<Participant> participants = new ArrayList<>();
+
     public Users(String username, String email, String password, List<Role> roles) {
         this.username = username;
         this.email = email;

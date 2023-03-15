@@ -18,8 +18,10 @@ import airbnb.com.backend1.Entity.Booking;
 import airbnb.com.backend1.Entity.Discount;
 import airbnb.com.backend1.Entity.Home;
 import airbnb.com.backend1.Entity.Host;
+import airbnb.com.backend1.Entity.Notify;
 import airbnb.com.backend1.Entity.Users;
 import airbnb.com.backend1.Entity.Enums.BookingStatus;
+import airbnb.com.backend1.Entity.Enums.NotifyStatus;
 import airbnb.com.backend1.Entity.Enums.Role;
 import airbnb.com.backend1.Entity.Request.BookingRequest;
 import airbnb.com.backend1.Entity.Response.BookingResponse;
@@ -32,6 +34,7 @@ import airbnb.com.backend1.Repository.BookingRepos;
 import airbnb.com.backend1.Repository.DiscountRepos;
 import airbnb.com.backend1.Repository.HomeRepos;
 import airbnb.com.backend1.Repository.HostRepos;
+import airbnb.com.backend1.Repository.NotifyRepos;
 import airbnb.com.backend1.Repository.UserRepos;
 import airbnb.com.backend1.Service.BookingService;
 
@@ -53,7 +56,8 @@ public class BookingServiceIml implements BookingService {
     HomeServiceIml homeServiceIml;
     @Autowired
     DiscountRepos discountRepos;
-    
+    @Autowired
+    NotifyRepos notifyRepos;
     
     @Override
     public BookingResponse createBooking(BookingRequest request) {
@@ -114,6 +118,24 @@ public class BookingServiceIml implements BookingService {
         }
         booking.setStatus(BookingStatus.PENDING);
         bookingRepos.save(booking);
+
+        authUser.getBookings().add(booking);
+        home.getBookings().add(booking);
+        userRepos.save(authUser);
+        homeRepos.save(home);
+
+        Host host = home.getOwner();
+        Notify notify = new Notify(NotifyStatus.PENDING_BOOKING, authUser, host, home, booking, false);
+        notifyRepos.save(notify);
+        
+        authUser.getNotifies().add(notify);
+        host.getNotifies().add(notify);
+        home.getNotifies().add(notify);
+
+        userRepos.save(authUser);
+        homeRepos.save(home);
+        hostRepos.save(host);
+
         createBookDateForBooking(booking, home, request.getCheckInDate(), request.getCheckOutDate());
         return bookingMapper.mapBookingToResponse(booking);
     }
@@ -124,12 +146,25 @@ public class BookingServiceIml implements BookingService {
         Host authHost = authUser.getHost();
         Booking booking = getBooking(bookingId);
         Home home = booking.getHome();
+        Users tenant = booking.getTenant();
 
         if(authHost == null || home.getOwner().getId() != authHost.getId()) {
             throw new BadResultException("unAuthorized to modify booking due to not being the host of the home");
         }
         booking.setStatus(BookingStatus.ACCECPTED);
         bookingRepos.save(booking);
+
+        Notify notify = new Notify(NotifyStatus.ACCECPTED_BOOKING, tenant, authHost, home, booking, false);
+        notifyRepos.save(notify);
+
+        tenant.getNotifies().add(notify);
+        authHost.getNotifies().add(notify);
+        home.getNotifies().add(notify);
+
+        userRepos.save(tenant);
+        homeRepos.save(home);
+        hostRepos.save(authHost);
+
         return bookingMapper.mapBookingToResponse(booking);
     }
 
@@ -139,6 +174,7 @@ public class BookingServiceIml implements BookingService {
         Host authHost = authUser.getHost();
         Booking booking = getBooking(bookingId);
         Home home = booking.getHome();
+        Users tenant = booking.getTenant();
 
         if(authHost == null || home.getOwner().getId() != authHost.getId()) {
             throw new BadResultException("unAuthorized to modify booking due to not being the host of the home");
@@ -146,6 +182,18 @@ public class BookingServiceIml implements BookingService {
         booking.setStatus(BookingStatus.UNACCEPTED);
         deleteBookdatesByBooking(bookingId);
         bookingRepos.save(booking);
+
+        Notify notify = new Notify(NotifyStatus.UNACCEPTED_BOOKING, tenant, authHost, home, booking, false);
+        notifyRepos.save(notify);
+
+        tenant.getNotifies().add(notify);
+        authHost.getNotifies().add(notify);
+        home.getNotifies().add(notify);
+
+        userRepos.save(tenant);
+        homeRepos.save(home);
+        hostRepos.save(authHost);
+
         return bookingMapper.mapBookingToResponse(booking);
     }
 
@@ -154,6 +202,7 @@ public class BookingServiceIml implements BookingService {
         Users authUser = getAuthUser();
         Booking booking = getBooking(bookingId);
         Home home = booking.getHome();
+        Host host = home.getOwner();
         LocalDate currentTime = LocalDate.now();
         System.out.println("authuser " + authUser.getId() );
         System.out.println("tenant " + booking.getTenant().getId() );
@@ -165,6 +214,17 @@ public class BookingServiceIml implements BookingService {
         if(authUser.getId() == booking.getTenant().getId() || authUser.getRoles().contains(Role.ADMIN)) {
             deleteBookdatesByBooking(bookingId);
             bookingRepos.delete(booking);
+
+            Notify notify = new Notify(NotifyStatus.CANCEL_BOOKING, authUser, host, home, booking, false);
+            notifyRepos.save(notify);
+
+            authUser.getNotifies().add(notify);
+            host.getNotifies().add(notify);
+            home.getNotifies().add(notify);
+
+            userRepos.save(authUser);
+            homeRepos.save(home);
+            hostRepos.save(host);
         } else {
 
             throw new BadResultException("unAuthorized to delete Booking");
@@ -258,6 +318,7 @@ public class BookingServiceIml implements BookingService {
        
        Booking booking = getBooking(bookingId);
        Home home = booking.getHome();
+       Host host = home.getOwner();
 
        if(authUser.getId() != booking.getTenant().getId()) {
         throw new BadResultException("unAuthorized to update Booking");
@@ -304,6 +365,18 @@ public class BookingServiceIml implements BookingService {
         booking.setPriceAfterDiscount(priceAfterDiscount);
         bookingRepos.save(booking);
         createBookDateForBooking(booking, home, checkInDate, checkOutDate);
+
+        
+        Notify notify = new Notify(NotifyStatus.UPDATE_BOOKING, authUser, host, home, booking, false);
+        notifyRepos.save(notify);
+        
+        authUser.getNotifies().add(notify);
+        host.getNotifies().add(notify);
+        home.getNotifies().add(notify);
+
+        userRepos.save(authUser);
+        homeRepos.save(home);
+        hostRepos.save(host);
 
        return bookingMapper.mapBookingToResponse(booking);
     }

@@ -112,6 +112,10 @@ public class Booking {
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Bookdate> bookdates = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Notify> notifies = new ArrayList<>();
+
     public Booking( int guests, Long days, double totalPrice, LocalDate checkInDate,  LocalDate checkOutDate, boolean isPaid,  String bookingCode, Home home, Users tenant) {
         this.guests = guests;
         this.days = days;

@@ -1,6 +1,6 @@
 *user
 *host
-hostReview
+*hostReview
 *country
 *city
 *home
@@ -9,7 +9,7 @@ hostReview
 *reservation
 *bookdate
 *wishlist
-homeReview
+*homeReview
 chat
 messages
 hostResponsdant
