@@ -80,6 +80,14 @@ public class Notify {
         this.isRead = isRead;
     }
 
+    public Notify(NotifyStatus status, Users tenant, Host host, Home home,  boolean isRead) {
+        this.status = status;
+        this.tenant = tenant;
+        this.host = host;
+        this.home = home;
+        this.isRead = isRead;
+    }
+
     public void setIsRead(boolean isRead) {
         this.isRead = isRead;
     }

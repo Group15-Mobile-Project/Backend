@@ -19,7 +19,13 @@ public class NotifyMapper {
         UserResponse tenant = userMapper.mapUserToResponse(notify.getTenant());
         HostResponse host = hostMapper.mapHostToResponse(notify.getHost());
 
-        NotifyResponse res = new NotifyResponse(notify.getId(), notify.getStatus(), notify.getIsRead(), notify.getDateCreated(), notify.getDateUpdated(), tenant, host, notify.getHome().getId(), notify.getBooking().getId(), notify.getBooking().getBookingCode());
+        NotifyResponse res = new NotifyResponse(notify.getId(), notify.getStatus(), notify.getIsRead(), notify.getDateCreated(), notify.getDateUpdated(), tenant, host, notify.getHome().getId());
+
+        
+        if(notify.getBooking() != null) {
+            res.setBookingId(notify.getBooking().getId());
+            res.setBookingCode(notify.getBooking().getBookingCode());
+        }
         
         return res;
     }

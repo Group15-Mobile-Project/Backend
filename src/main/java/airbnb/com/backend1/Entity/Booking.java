@@ -128,6 +128,8 @@ public class Booking {
         this.tenant = tenant;
     }
 
+    
+
 
 
     public void setIsPaid(boolean isPaid) {

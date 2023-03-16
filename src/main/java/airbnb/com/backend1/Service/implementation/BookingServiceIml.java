@@ -215,7 +215,7 @@ public class BookingServiceIml implements BookingService {
             deleteBookdatesByBooking(bookingId);
             bookingRepos.delete(booking);
 
-            Notify notify = new Notify(NotifyStatus.CANCEL_BOOKING, authUser, host, home, booking, false);
+            Notify notify = new Notify(NotifyStatus.CANCEL_BOOKING, authUser, host, home,  false);
             notifyRepos.save(notify);
 
             authUser.getNotifies().add(notify);

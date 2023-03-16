@@ -1519,7 +1519,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxdWFuMiIsImV4cCI6MTY3ODgyOTI2OSwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl19.rIYuoKYWuZ3Oct5Fujt1VZfjUBR8-XBkPieGGDCmcBeg0315hASykA51zob0URptsXKP39WBUX7jlyZ5LzaXhQ",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxdWFuMiIsImV4cCI6MTY3ODk3NzEyNCwiYXV0aG9yaXRpZXMiOlsiUk9MRV9IT1NUIiwiUk9MRV9VU0VSIl19.W-ntbEevAxYQhu1_fcrhkxExCYS9Rb6_nPuJfTipX0d_iwF1o-gwNmUNe0n6DJPLBpwzZqe6fu_9erok70UItg",
 									"type": "string"
 								}
 							]
@@ -1528,7 +1528,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"guests\": 2,\r\n    \"days\": 3,\r\n    \"totalPrice\": 300,\r\n     \"checkInDate\": \"2023-05-21\",\r\n    \"checkOutDate\": \"2023-05-24\",\r\n    \"homeId\": 1,\r\n    \"priceAfterDiscount\": 300\r\n}",
+							"raw": "{\r\n    \"guests\": 2,\r\n    \"days\": 3,\r\n    \"totalPrice\": 300,\r\n     \"checkInDate\": \"2023-08-21\",\r\n    \"checkOutDate\": \"2023-08-24\",\r\n    \"homeId\": 1,\r\n    \"priceAfterDiscount\": 300\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1846,14 +1846,14 @@
 					"response": []
 				},
 				{
-					"name": "delete booking by id",
+					"name": "delete booking by booking Id (remember to check the notification of cancelling booking because that notification does not have the booking id))",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxdWFuMiIsImV4cCI6MTY3ODczNjg1NSwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl19.CD1ONo8p2KMFN7lFfmMfi7_57-EWygJfs-VfbqhTzNAb1-TWkdnatwJhgaFDDtZDgZUV-YytaPaRzaYCn_Mz3w",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxdWFuMiIsImV4cCI6MTY3ODk3NzY1MCwiYXV0aG9yaXRpZXMiOlsiUk9MRV9IT1NUIiwiUk9MRV9VU0VSIl19.Sv779E6K1iINpJeGsbRQ0HZh8Icalhwd7DAMe4USsIJnqQLbOJUmM82damMU75Zd4TZB6EnCij9mOHzfloy0kA",
 									"type": "string"
 								}
 							]
@@ -1861,7 +1861,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/bookings/booking/16",
+							"raw": "http://localhost:8080/api/bookings/booking/5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1871,7 +1871,7 @@
 								"api",
 								"bookings",
 								"booking",
-								"16"
+								"5"
 							]
 						}
 					},
@@ -1973,14 +1973,14 @@
 					"response": []
 				},
 				{
-					"name": "accept booking",
+					"name": "accept booking by booking id",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxdWFuIiwiZXhwIjoxNjc4ODI5NTkzLCJhdXRob3JpdGllcyI6WyJST0xFX0hPU1QiLCJST0xFX1VTRVIiXX0.AF2hyei68wayY8YO-fCa1pWg7IcRNJn63xdErqyzKG8AWBmkDY2KRXgNOg04Td6juMS14xTS3sB3EHMc6UF57A",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxdWFuIiwiZXhwIjoxNjc4OTc3MjcxLCJhdXRob3JpdGllcyI6WyJST0xFX0hPU1QiLCJST0xFX1VTRVIiXX0._UMlJOivKmrQAymUM6fUwrRdBGMgyvSzi3QaRROYZNirx3vqkx-djG_LgABaHxn4GzfYYwcMHWhwVFEA68Vb-A",
 									"type": "string"
 								}
 							]
@@ -1997,7 +1997,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/bookings/acceptbooking/1",
+							"raw": "http://localhost:8080/api/bookings/acceptbooking/4",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2007,7 +2007,7 @@
 								"api",
 								"bookings",
 								"acceptbooking",
-								"1"
+								"4"
 							]
 						}
 					},
@@ -2549,6 +2549,448 @@
 								"api",
 								"tenantReviews",
 								"review"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notification",
+			"item": [
+				{
+					"name": "get notifications by auth tenant",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxdWFuMiIsImV4cCI6MTY3ODk3NzEyNCwiYXV0aG9yaXRpZXMiOlsiUk9MRV9IT1NUIiwiUk9MRV9VU0VSIl19.W-ntbEevAxYQhu1_fcrhkxExCYS9Rb6_nPuJfTipX0d_iwF1o-gwNmUNe0n6DJPLBpwzZqe6fu_9erok70UItg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/notifies/authTenant",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"notifies",
+								"authTenant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get notifications by auth Host",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxdWFuIiwiZXhwIjoxNjc4OTc3MjcxLCJhdXRob3JpdGllcyI6WyJST0xFX0hPU1QiLCJST0xFX1VTRVIiXX0._UMlJOivKmrQAymUM6fUwrRdBGMgyvSzi3QaRROYZNirx3vqkx-djG_LgABaHxn4GzfYYwcMHWhwVFEA68Vb-A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/notifies/authHost",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"notifies",
+								"authHost"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update the finished reading status of notification by notification Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxdWFuIiwiZXhwIjoxNjc4OTc4Mjc5LCJhdXRob3JpdGllcyI6WyJST0xFX0hPU1QiLCJST0xFX1VTRVIiXX0.ggX9-sdMh9woNeApaGTYA3x9jL7UzOfcTPLAosBaX2dlaYcYxKv5FgwPUk-wEh-xrwQDX8al_WIyzwOfd6na-A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/notifies/notify/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"notifies",
+								"notify",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "images",
+			"item": [
+				{
+					"name": "get image",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/images/image/book-luv2code-1000.png_3d164bf1-fb74-4e58-abbb-0498e7af04c2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"images",
+								"image",
+								"book-luv2code-1000.png_3d164bf1-fb74-4e58-abbb-0498e7af04c2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload multiple images",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Quan Doan/Desktop/java springboot/fullstack-react-and-springboot-main/source-code/01-starter-files/Images/BooksImages/book-luv2code-1000.png"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Quan Doan/Desktop/java springboot/fullstack-react-and-springboot-main/source-code/01-starter-files/Images/BooksImages/new-book-1.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/images/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"images",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload single image",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Quan Doan/Desktop/java springboot/fullstack-react-and-springboot-main/source-code/01-starter-files/Images/BooksImages/book-luv2code-1000.png"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/images/singleImage",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"images",
+								"singleImage"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "chat",
+			"item": [
+				{
+					"name": "get all chats by auth User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxdWFuIiwiZXhwIjoxNjc4OTc1NzgzLCJhdXRob3JpdGllcyI6WyJST0xFX0hPU1QiLCJST0xFX1VTRVIiXX0.tpZgsnU9304RpavOJ1azO3IlLr-_-cZwkigexJPv8epAp7vBtmRZ5jlKZc2xWve0sEYOe-fAQ3tp06SuYr9bIQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/chats/authUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"chats",
+								"authUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get chat of authUser and receiver",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxdWFuIiwiZXhwIjoxNjc4OTc1NzgzLCJhdXRob3JpdGllcyI6WyJST0xFX0hPU1QiLCJST0xFX1VTRVIiXX0.tpZgsnU9304RpavOJ1azO3IlLr-_-cZwkigexJPv8epAp7vBtmRZ5jlKZc2xWve0sEYOe-fAQ3tp06SuYr9bIQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/chats/authUser/receiver/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"chats",
+								"authUser",
+								"receiver",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get chat by Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxdWFuIiwiZXhwIjoxNjc4OTc1NzgzLCJhdXRob3JpdGllcyI6WyJST0xFX0hPU1QiLCJST0xFX1VTRVIiXX0.tpZgsnU9304RpavOJ1azO3IlLr-_-cZwkigexJPv8epAp7vBtmRZ5jlKZc2xWve0sEYOe-fAQ3tp06SuYr9bIQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/chats/chat/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"chats",
+								"chat",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update read status of chat participants",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxdWFuIiwiZXhwIjoxNjc4OTc1NzgzLCJhdXRob3JpdGllcyI6WyJST0xFX0hPU1QiLCJST0xFX1VTRVIiXX0.tpZgsnU9304RpavOJ1azO3IlLr-_-cZwkigexJPv8epAp7vBtmRZ5jlKZc2xWve0sEYOe-fAQ3tp06SuYr9bIQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/chats/chat/3/readStatus",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"chats",
+								"chat",
+								"3",
+								"readStatus"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "message",
+			"item": [
+				{
+					"name": "get all messages of a chat by chat Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxdWFuIiwiZXhwIjoxNjc4OTc1NzgzLCJhdXRob3JpdGllcyI6WyJST0xFX0hPU1QiLCJST0xFX1VTRVIiXX0.tpZgsnU9304RpavOJ1azO3IlLr-_-cZwkigexJPv8epAp7vBtmRZ5jlKZc2xWve0sEYOe-fAQ3tp06SuYr9bIQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/messages/chat/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"messages",
+								"chat",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add message to chat",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxdWFuMiIsImV4cCI6MTY3ODk3NjgwNiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9IT1NUIiwiUk9MRV9VU0VSIl19.pL4DBacZC6YwFFGfosi-kwEEmub_CvEvnC5xNfbfwZxy5PLKqqGndQSgt5E4TK68KiXHE5M_luPzF3k9WrTMKg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"chatId\": 3,\r\n    \"content\": \"hello there\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/messages/message",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"messages",
+								"message"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete message by message Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxdWFuMiIsImV4cCI6MTY3ODk3NjgwNiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9IT1NUIiwiUk9MRV9VU0VSIl19.pL4DBacZC6YwFFGfosi-kwEEmub_CvEvnC5xNfbfwZxy5PLKqqGndQSgt5E4TK68KiXHE5M_luPzF3k9WrTMKg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/messages/message/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"messages",
+								"message",
+								"2"
 							]
 						}
 					},

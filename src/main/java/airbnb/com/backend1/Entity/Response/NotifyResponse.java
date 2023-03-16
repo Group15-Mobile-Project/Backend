@@ -26,5 +26,19 @@ public class NotifyResponse {
     private Long homeId;
     private Long bookingId;
     private String bookingCode;
+    
+    public NotifyResponse(Long id, NotifyStatus status, boolean isRead, LocalDate dateCreated, LocalDate dateUpdated,
+            UserResponse tenant, HostResponse host, Long homeId) {
+        this.id = id;
+        this.status = status;
+        this.isRead = isRead;
+        this.dateCreated = dateCreated;
+        this.dateUpdated = dateUpdated;
+        this.tenant = tenant;
+        this.host = host;
+        this.homeId = homeId;
+    }
+
+    
 
 }
