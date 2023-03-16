@@ -103,6 +103,7 @@ public class TenantReviewServiceIml implements TenantReviewService {
             throw new EntityExistingException("the tenant review exist");
         }
         TenantReview review = new TenantReview(req.getContent().toLowerCase(), req.getRating(), tenant, host, home, booking);
+        
         reviewRepos.save(review);
 
         Double tenantRating;
@@ -120,7 +121,8 @@ public class TenantReviewServiceIml implements TenantReviewService {
         booking.setTenantReview(review);
         bookingRepos.save(booking);
 
-        Notify notify = new Notify(NotifyStatus.TENANT_REVIEW, tenant, host, home, booking, false);
+        // Notify notify = new Notify(NotifyStatus.TENANT_REVIEW, tenant, host, home, booking, false);
+        Notify notify = new Notify(NotifyStatus.TENANT_REVIEW, tenant, host, home, false);
         notifyRepos.save(notify);
         
         tenant.getNotifies().add(notify);

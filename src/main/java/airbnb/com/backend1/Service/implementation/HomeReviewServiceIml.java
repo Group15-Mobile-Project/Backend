@@ -142,7 +142,8 @@ public class HomeReviewServiceIml implements HomeReviewService {
         // homeRepos.save(home);
 
         Host host = home.getOwner();
-        Notify notify = new Notify(NotifyStatus.HOME_REVIEW, authUser, host, home, booking, false);
+        // Notify notify = new Notify(NotifyStatus.HOME_REVIEW, authUser, host, home, booking, false);
+        Notify notify = new Notify(NotifyStatus.HOME_REVIEW, authUser, host, home, false);
         notifyRepos.save(notify);
         
         authUser.getNotifies().add(notify);
