@@ -102,6 +102,18 @@ public class HomeServiceIml implements HomeService {
     }
 
     @Override
+    public List<HomeResponse> getAllByCategory(Long categoryId) {
+        Optional<HomeCategory> homeCategoryEntity = homeCategoryRepos.findById(categoryId);
+        if(!homeCategoryEntity.isPresent()) {
+            throw new EntityNotFoundException("the home category not found");
+        }
+        HomeCategory category = homeCategoryEntity.get();
+        List<Home> homes = homeRepos.findByHomeCategory(category);
+        List<HomeResponse> responses = homes.stream().map(hom -> homeMapper.mapHomeToResponse(hom)).collect(Collectors.toList());
+        return responses;
+    }
+
+    @Override
     public List<HomeResponse> getAllBySearch(String cityName, LocalDate startDate, LocalDate closeDate, Integer capacity) {
         LocalDate currentTime = LocalDate.now();
         if(startDate.isBefore(currentTime) ||closeDate.isBefore(currentTime)) {

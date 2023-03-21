@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import airbnb.com.backend1.Entity.Response.HomeResponse;
 import airbnb.com.backend1.Service.HomeService;
 import jakarta.validation.Valid;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/homes")
 public class HomeController {
@@ -33,6 +35,10 @@ public class HomeController {
     @GetMapping("/city/{cityName}")
     public ResponseEntity<List<HomeResponse>> getAllByCity(@PathVariable String cityName) {
         return new ResponseEntity<List<HomeResponse>>(homeService.getAllByCity(cityName), HttpStatus.OK);
+    }
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<List<HomeResponse>> getAllByCategory(@PathVariable Long categoryId) {
+        return new ResponseEntity<List<HomeResponse>>(homeService.getAllByCategory(categoryId), HttpStatus.OK);
     }
     @GetMapping("/search")
     public ResponseEntity<List<HomeResponse>> getAllBySearchQuery(@RequestParam(required = false) String city, @RequestParam(required = false) LocalDate startDay, @RequestParam(required = false) LocalDate closeDay, @RequestParam(required = false) Integer capacity ) {
