@@ -158,7 +158,7 @@ public class HomeServiceIml implements HomeService {
         Optional<City> entityCity = cityRepos.findByName(request.getCity());
         City city;
         if(!entityCity.isPresent()) {
-           city = new City(request.getCity(), country);
+           city = new City(request.getCity().toLowerCase(), country);
            cityRepos.save(city);
         } else {
             city = entityCity.get();

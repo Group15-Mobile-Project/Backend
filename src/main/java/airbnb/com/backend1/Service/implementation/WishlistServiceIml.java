@@ -49,7 +49,7 @@ public class WishlistServiceIml implements WishlistService {
     @Override
     public List<WishlistResponse> getWishlistsByAuthUser() {
         Users authUsers = getAuthUser();
-       List<Wishlist> lists = wishlistRepos.findByHome(authUsers.getId());
+       List<Wishlist> lists = wishlistRepos.findByUser(authUsers.getId());
        List<WishlistResponse> res = lists.stream().map(list -> wishlistMapper.mapWishlistToResponse(list)).collect(Collectors.toList());
        return res;
     }
