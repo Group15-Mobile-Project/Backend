@@ -389,7 +389,7 @@ public class BookingServiceIml implements BookingService {
     Double priceAfterDiscount = countTotalPriceAfterDiscount(home, discount, checkin, checkout);
     Long days = ChronoUnit.DAYS.between(checkin, checkout);
     double totalPrice = days * home.getPrice();
-    CountDiscoutResponse res = new CountDiscoutResponse(totalPrice - priceAfterDiscount, priceAfterDiscount, homeId, checkin, checkout);
+    CountDiscoutResponse res = new CountDiscoutResponse(totalPrice - priceAfterDiscount, priceAfterDiscount, totalPrice, homeId, checkin, checkout, days);
         return res;
     }
 

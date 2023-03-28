@@ -60,7 +60,7 @@ public class BookdateServiceIml implements BookdateService {
         LocalDate currentTime = LocalDate.now();
         Home home = getHome(homeId);
         List<Bookdate> dates = bookdateRepos.findByHome(home);
-        List<BookdateResponse> res = dates.stream().filter(dat -> dat.getDate().isAfter(currentTime)).map(dat ->      bookdateMapper.mapBookdateToResponse(dat)).collect(Collectors.toList());
+        List<BookdateResponse> res = dates.stream().filter(dat -> dat.getDate().isAfter(currentTime)).map(dat ->  bookdateMapper.mapBookdateToResponse(dat)).collect(Collectors.toList());
         return res;
     }
     @Override

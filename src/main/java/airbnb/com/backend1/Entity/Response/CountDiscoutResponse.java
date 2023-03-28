@@ -14,7 +14,9 @@ import lombok.Setter;
 public class CountDiscoutResponse {
     private Double discountPrice;
     private Double priceAfterDiscount;
+    private Double totalPrice;
     private Long homeId;
     private LocalDate checkIn;
     private LocalDate checkOut;
+    private Long days;
 }
