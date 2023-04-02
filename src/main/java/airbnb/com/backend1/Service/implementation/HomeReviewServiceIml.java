@@ -76,11 +76,8 @@ public class HomeReviewServiceIml implements HomeReviewService {
     }
 
     @Override
-    public HomeReviewResponse getReviewByHomeAndUser(Long homeId, Long userId) {
+    public HomeReviewResponse getReviewByHomeAndUser(Long homeId) {
         Users authUser = getAuthUser();
-        if(authUser.getId() != userId) {
-            throw new BadResultException("unAuthorized to get a review because of not an authenticated user");
-        }
         Home home = getHome(homeId);
         if(authUser.getId() == home.getOwner().getUser().getId()) {
             throw new BadResultException("the owner of the home cannot add home review");
@@ -93,6 +90,18 @@ public class HomeReviewServiceIml implements HomeReviewService {
 
         HomeReview review = entity.get();
         return mapper.mapHomeReviewToRes(review);
+    }
+
+    @Override
+    public List<HomeReviewResponse> getReviewsByHost(Long hostId) {
+        Optional<Host> entity = hostRepos.findById(hostId);
+        if(!entity.isPresent()) {
+            throw new EntityNotFoundException("the host not found");
+        }
+        Host host = entity.get();
+        List<HomeReview> reviews = homeReviewRepos.findByHost(hostId);
+        List<HomeReviewResponse> res = reviews.stream().map(review -> mapper.mapHomeReviewToRes(review)).collect(Collectors.toList());
+        return res;
     }
 
     @Override

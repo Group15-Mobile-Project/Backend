@@ -29,6 +29,10 @@ public class HomeReviewController {
     public ResponseEntity<List<HomeReviewResponse>> getByHome(@PathVariable Long homeId) {
         return new ResponseEntity<List<HomeReviewResponse>>(reviewService.getReviewsByHome(homeId), HttpStatus.OK);
     }
+    @GetMapping("/host/{hostId}")
+    public ResponseEntity<List<HomeReviewResponse>> getByhost(@PathVariable Long hostId) {
+        return new ResponseEntity<List<HomeReviewResponse>>(reviewService.getReviewsByHost(hostId), HttpStatus.OK);
+    }
     @GetMapping("/home/{homeId}/search")
     public ResponseEntity<List<HomeReviewResponse>> getByHomeAndQuerySearch(@PathVariable Long homeId, @RequestParam String query) {
         return new ResponseEntity<List<HomeReviewResponse>>(reviewService.getReviewsByHomeAndSearching(homeId, query), HttpStatus.OK);
@@ -38,9 +42,9 @@ public class HomeReviewController {
         return new ResponseEntity<HomeReviewResponse>(reviewService.getReviewById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/home/{homeId}/user/{userId}")
-    public ResponseEntity<HomeReviewResponse> getByHomeAndAuthUser(@PathVariable Long homeId, @PathVariable Long userId) {
-        return new ResponseEntity<HomeReviewResponse>(reviewService.getReviewByHomeAndUser(homeId, userId), HttpStatus.OK);
+    @GetMapping("/authUser/home/{homeId}")
+    public ResponseEntity<HomeReviewResponse> getByHomeAndAuthUser(@PathVariable Long homeId) {
+        return new ResponseEntity<HomeReviewResponse>(reviewService.getReviewByHomeAndUser(homeId), HttpStatus.OK);
     }
 
     @PostMapping("/review")

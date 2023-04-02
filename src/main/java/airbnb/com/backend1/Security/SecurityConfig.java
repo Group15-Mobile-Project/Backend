@@ -62,6 +62,7 @@ public class SecurityConfig {
         .requestMatchers(HttpMethod.GET ,"/api/hosts/host/**").permitAll()
         .requestMatchers(HttpMethod.GET ,"/api/homeReviews/**").permitAll()
         .requestMatchers(HttpMethod.GET ,"/api/wishlists/home/**").permitAll()
+        .requestMatchers(HttpMethod.GET ,"/api/tenantReviews/tenant/**").permitAll()
         .anyRequest().authenticated()
         .and()
         .addFilterBefore(filterException, filterAuthentication.getClass())

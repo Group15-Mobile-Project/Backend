@@ -93,11 +93,11 @@ public class BookingServiceIml implements BookingService {
         double priceAfterDiscount = 0;
 
         if(discount != null) {
-             priceAfterDiscount = countTotalPriceAfterDiscount(home, discount, request.getCheckInDate(), request.getCheckOutDate());
+            priceAfterDiscount = countTotalPriceAfterDiscount(home, discount, request.getCheckInDate(), request.getCheckOutDate());
             System.out.println(priceAfterDiscount);
         if(request.getPriceAfterDiscount() != null && request.getPriceAfterDiscount() != priceAfterDiscount) {
             throw new BadResultException("the price after discounted is wrong");
-        }
+            }
         }
         System.out.println(priceAfterDiscount + " price after discount");
 
@@ -348,21 +348,25 @@ public class BookingServiceIml implements BookingService {
         }
 
         Discount discount = home.getDiscount();
-        
-        double priceAfterDiscount = countTotalPriceAfterDiscount(home, discount, checkInDate, checkOutDate);
+        double priceAfterDiscount = 0;
 
-
+        if(discount != null) {
+            priceAfterDiscount = countTotalPriceAfterDiscount(home, discount, checkInDate, checkOutDate);
+            System.out.println(priceAfterDiscount);
+        }
         double totalPriceReq = home.getPrice() * days;
-
         if( totalPriceReq != totalPrice) {
             throw new BadResultException("the total price  is wrong");
         }
-
         booking.setCheckInDate(checkInDate);
         booking.setCheckOutDate(checkOutDate);
         booking.setTotalPrice(totalPriceReq);
         booking.setDays(daysBetween);
-        booking.setPriceAfterDiscount(priceAfterDiscount);
+        if(priceAfterDiscount != 0) {
+            booking.setPriceAfterDiscount(Double.valueOf(priceAfterDiscount));
+        } else {
+            booking.setPriceAfterDiscount(totalPrice);
+        }
         bookingRepos.save(booking);
         createBookDateForBooking(booking, home, checkInDate, checkOutDate);
 
@@ -383,13 +387,16 @@ public class BookingServiceIml implements BookingService {
 
     @Override
     public CountDiscoutResponse getCountDiscount(Long homeId, LocalDate checkin, LocalDate checkout) {
-      Home home = getHome(homeId);
-      Discount discount = home.getDiscount();
-
-    Double priceAfterDiscount = countTotalPriceAfterDiscount(home, discount, checkin, checkout);
-    Long days = ChronoUnit.DAYS.between(checkin, checkout);
-    double totalPrice = days * home.getPrice();
-    CountDiscoutResponse res = new CountDiscoutResponse(totalPrice - priceAfterDiscount, priceAfterDiscount, totalPrice, homeId, checkin, checkout, days);
+        Home home = getHome(homeId);
+        Discount discount = home.getDiscount();
+        Long days = ChronoUnit.DAYS.between(checkin, checkout);
+        double totalPrice = days * home.getPrice();
+        if(discount == null) {
+            CountDiscoutResponse res = new CountDiscoutResponse(0.00, totalPrice, totalPrice, homeId, checkin, checkout, days);
+            return res;
+        }
+        Double priceAfterDiscount = countTotalPriceAfterDiscount(home, discount, checkin, checkout);
+        CountDiscoutResponse res = new CountDiscoutResponse(totalPrice - priceAfterDiscount, priceAfterDiscount, totalPrice, homeId, checkin, checkout, days);
         return res;
     }
 
