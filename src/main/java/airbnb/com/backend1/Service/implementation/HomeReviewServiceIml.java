@@ -76,14 +76,15 @@ public class HomeReviewServiceIml implements HomeReviewService {
     }
 
     @Override
-    public HomeReviewResponse getReviewByHomeAndUser(Long homeId) {
-        Users authUser = getAuthUser();
+    public HomeReviewResponse getReviewByHomeAndUser(Long homeId, Long userId) {
+        Optional<Users> entityUser = userRepos.findById(userId);
+        Users user = isCheck(entityUser);
         Home home = getHome(homeId);
-        if(authUser.getId() == home.getOwner().getUser().getId()) {
+        if(user.getId() == home.getOwner().getUser().getId()) {
             throw new BadResultException("the owner of the home cannot add home review");
         }
 
-        Optional<HomeReview> entity = homeReviewRepos.findByHomeAndUser(home, authUser);
+        Optional<HomeReview> entity = homeReviewRepos.findByHomeAndUser(home, user);
         if(!entity.isPresent()) {
             throw new EntityExistingException("just allowed to add one review per home");
         }

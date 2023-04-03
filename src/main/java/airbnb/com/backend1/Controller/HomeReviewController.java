@@ -42,9 +42,9 @@ public class HomeReviewController {
         return new ResponseEntity<HomeReviewResponse>(reviewService.getReviewById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/authUser/home/{homeId}")
-    public ResponseEntity<HomeReviewResponse> getByHomeAndAuthUser(@PathVariable Long homeId) {
-        return new ResponseEntity<HomeReviewResponse>(reviewService.getReviewByHomeAndUser(homeId), HttpStatus.OK);
+    @GetMapping("/home/{homeId}/user/{userId}")
+    public ResponseEntity<HomeReviewResponse> getByHomeAndAuthUser(@PathVariable Long homeId, @PathVariable Long userId) {
+        return new ResponseEntity<HomeReviewResponse>(reviewService.getReviewByHomeAndUser(homeId, userId), HttpStatus.OK);
     }
 
     @PostMapping("/review")

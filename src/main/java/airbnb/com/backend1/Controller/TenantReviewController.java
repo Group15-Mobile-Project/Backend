@@ -29,9 +29,9 @@ public class TenantReviewController {
     public ResponseEntity<List<TenantReviewResponse>> getAllByTenant(@PathVariable Long tenantId) {
         return new ResponseEntity<List<TenantReviewResponse>>(reviewService.getReviewsByTenant(tenantId), HttpStatus.OK);
     }
-    @GetMapping("/authHost/tenant/{tenantId}")
-    public ResponseEntity<TenantReviewResponse> getByTenantAndAuthHost(@PathVariable Long tenantId) {
-        return new ResponseEntity<TenantReviewResponse>(reviewService.getByTenantAndAuthHost(tenantId), HttpStatus.OK);
+    @GetMapping("/tenant/{tenantId}/host/{hostId}")
+    public ResponseEntity<TenantReviewResponse> getByTenantAndAuthHost(@PathVariable Long tenantId, @PathVariable Long hostId) {
+        return new ResponseEntity<TenantReviewResponse>(reviewService.getByTenantAndHost(tenantId, hostId), HttpStatus.OK);
     }
     @GetMapping("/review/{id}")
     public ResponseEntity<TenantReviewResponse> getById(@PathVariable Long id) {

@@ -8,7 +8,7 @@ import airbnb.com.backend1.Entity.Response.TenantReviewResponse;
 public interface TenantReviewService {
     //this method is used to get all tenant reviews of a user including tenant or authuser based on its userId.
     List<TenantReviewResponse> getReviewsByTenant(Long tenantId);
-    TenantReviewResponse getByTenantAndAuthHost(Long tenantId);
+    TenantReviewResponse getByTenantAndHost(Long tenantId, Long hostId);
 
     TenantReviewResponse getById(Long id);
     TenantReviewResponse save(TenantReviewRequest req);

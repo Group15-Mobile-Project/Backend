@@ -13,7 +13,7 @@ public interface HomeReviewService {
     HomeReviewResponse saveReview(HomeReviewRequest req);
     HomeReviewResponse updateReview(Long id, int rating, String content);
     HomeReviewResponse getReviewById(Long id);
-    HomeReviewResponse getReviewByHomeAndUser(Long homeId);
+    HomeReviewResponse getReviewByHomeAndUser(Long homeId, Long userId);
     List<HomeReviewResponse> getReviewsByHome(Long homeId);
     List<HomeReviewResponse> getReviewsByHomeAndSearching(Long homeId, String query);
     List<HomeReviewResponse> getReviewsByHost(Long hostId);

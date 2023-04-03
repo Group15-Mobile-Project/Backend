@@ -56,10 +56,9 @@ public class TenantReviewServiceIml implements TenantReviewService {
        return mapper.mapTenantReviewToRespose(review);
     }
     @Override
-    public TenantReviewResponse getByTenantAndAuthHost(Long tenantId) {
+    public TenantReviewResponse getByTenantAndHost(Long tenantId, Long hostId) {
         Users tenant = getTenant(tenantId);
-        Users authUser = getAuthUser();
-        Host host = authUser.getHost();
+        Host host = getHostById(hostId);
         Optional<TenantReview> entity = reviewRepos.findByTenantAndHost(tenant, host);
         if(!entity.isPresent()) {
          throw new EntityNotFoundException("the tenant review not found");
