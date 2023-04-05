@@ -18,4 +18,5 @@ public class BookdateResponse {
     private Long homeId;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate date;
+    private Long bookingId;
 }
