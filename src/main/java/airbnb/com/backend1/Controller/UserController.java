@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import airbnb.com.backend1.Entity.Request.AdminSignUp;
@@ -64,6 +65,10 @@ public class UserController {
     @PutMapping("/changePassword")
     public ResponseEntity<UserResponse> updatePassword(@Valid @RequestBody ChangePassword changePasswordRequest) {
         return new ResponseEntity<>(userService.updatePassword(changePasswordRequest), HttpStatus.OK);
+    }
+    @PutMapping("/updateUserProfile")
+    public ResponseEntity<UserResponse> updateUserProfile(@RequestParam(required = false) String username, @RequestParam(required = false) String email, @RequestParam(required = false) String imageurl) {
+        return new ResponseEntity<>(userService.updateUserProfile(username, email, imageurl), HttpStatus.OK);
     }
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/updateToAdmin/{id}")

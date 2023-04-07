@@ -15,10 +15,9 @@ public interface UserService {
     List<UserResponse> getListUsersByName(String username);
     UserResponse getUserById(Long id);
     UserResponse getUserByUsername(String username);
-  
     UserResponse updatePassword(ChangePassword changePassword);
     void deleteUsers(Long id);
- 
     UserResponse updateToAdmin(Long userId);
     UserResponse updateToHost();
+    UserResponse updateUserProfile(String username, String email, String imageurl);
 }

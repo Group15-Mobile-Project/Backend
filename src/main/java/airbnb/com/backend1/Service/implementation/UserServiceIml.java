@@ -237,6 +237,31 @@ public class UserServiceIml implements UserDetailsService, UserService {
 
         return userMapper.mapUserToResponse(user);
     }
+
+    @Override
+    public UserResponse updateUserProfile(String username, String email, String imageurl) {
+        Users user = getAuthUser();
+        if(username != null && !username.equals(user.getUsername())) {
+            Optional<Users> usernameEntity = userRepos.findByUsername(username);
+            if(usernameEntity.isPresent() ) {
+                throw new EntityExistingException("the username exists");
+            } 
+            user.setUsername(username);
+        }
+        if(email != null && !email.equals(user.getEmail())) {
+            Optional<Users> usernameEntity = userRepos.findByUsername(email);
+            if(usernameEntity.isPresent() ) {
+                throw new EntityExistingException("the email exists");
+            } 
+            user.setEmail(email);
+        }
+        if(imageurl != null) {
+            user.setImageurl(imageurl);
+        }
+        userRepos.save(user);
+        return userMapper.mapUserToResponse(user);
+    }
+
     private Users isCheck(Optional<Users> entity) {
         if(entity.isPresent()) {
             return entity.get();
