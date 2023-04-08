@@ -17,7 +17,7 @@ import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "home")
+@Entity(name = "Home")
 @Table(name = "home")
 @Getter
 @Setter

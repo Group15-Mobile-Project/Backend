@@ -28,6 +28,10 @@ public class MessageController {
     public ResponseEntity<List<MessageResponse>> getAllByChat(@PathVariable Long chatId) {
         return new ResponseEntity<List<MessageResponse>>(messageService.getAllByChat(chatId), HttpStatus.OK);
     }
+    @GetMapping("/receiver/{receiverId}")
+    public ResponseEntity<List<MessageResponse>> getAllByAuthAndReceiver(@PathVariable Long receiverId) {
+        return new ResponseEntity<List<MessageResponse>>(messageService.getAllByAuthserAndReceiver(receiverId), HttpStatus.OK);
+    }
     @PostMapping("/message")
     public ResponseEntity<MessageResponse> addMessage(@RequestBody @Valid MessageRequest req) {
         return new ResponseEntity<MessageResponse>(messageService.add(req), HttpStatus.CREATED);

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import airbnb.com.backend1.Entity.Response.HostResponse;
+import airbnb.com.backend1.Entity.Response.HostStatistics;
 import airbnb.com.backend1.Service.HostService;
 
 @RestController
@@ -27,6 +28,10 @@ public class HostController {
     @GetMapping("/authUser")
     public ResponseEntity<HostResponse> getHostByAuthuser() {
         return new ResponseEntity<HostResponse>(hostService.getHostByAuthUser(), HttpStatus.OK);
+    }
+    @GetMapping("/statistic/authUser")
+    public ResponseEntity<HostStatistics> getHostStisticsByAuthuser() {
+        return new ResponseEntity<HostStatistics>(hostService.getHostStatistics(), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ADMIN')")

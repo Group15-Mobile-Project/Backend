@@ -9,11 +9,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import airbnb.com.backend1.Entity.Booking;
+import airbnb.com.backend1.Entity.Home;
+import airbnb.com.backend1.Entity.HomeReview;
 import airbnb.com.backend1.Entity.Host;
 import airbnb.com.backend1.Entity.Users;
 import airbnb.com.backend1.Entity.Response.HostResponse;
+import airbnb.com.backend1.Entity.Response.HostStatistics;
 import airbnb.com.backend1.Exception.EntityNotFoundException;
 import airbnb.com.backend1.Mapper.HostMapper;
+import airbnb.com.backend1.Repository.BookingRepos;
+import airbnb.com.backend1.Repository.HomeRepos;
+import airbnb.com.backend1.Repository.HomeReviewRepos;
 import airbnb.com.backend1.Repository.HostRepos;
 import airbnb.com.backend1.Repository.UserRepos;
 import airbnb.com.backend1.Service.HostService;
@@ -27,6 +34,12 @@ public class HostServiceiml implements HostService {
     UserRepos userRepos;
     @Autowired
     HostMapper hostMapper;
+    @Autowired
+    HomeRepos homeRepos;
+    @Autowired
+    BookingRepos bookingRepos;
+    @Autowired
+    HomeReviewRepos homeReviewRepos;
 
     @Override
     public List<HostResponse> getAllHosts() {
@@ -64,6 +77,31 @@ public class HostServiceiml implements HostService {
        }
         throw new EntityNotFoundException("the host not found");
     }
+    @Override
+    public HostStatistics getHostStatistics() {
+        Users authUser = getAuthUser();
+        Host host = authUser.getHost();
+        List<Home> homes = homeRepos.findByOwner(host);
+        int homesNumber = homeRepos.findNumberHomesByHost(host.getId());
+        List<Booking> bookings = bookingRepos.findByHost(host.getId());
+        List<HomeReview> reviews = homeReviewRepos.findByHost(host.getId());
+        double earnings = bookings.stream().reduce(0.0, (total, a) -> total + a.getPriceAfterDiscount  (), Double::sum);
+        System.out.println("earnings " + earnings);
+        System.out.println("number of homes " + homesNumber);
+
+        HostResponse hostResponse = hostMapper.mapHostToResponse(host);
+        HostStatistics statistic = new HostStatistics(hostResponse, earnings, bookings.size(), homesNumber, reviews.size());
+
+        if(reviews.size() > 0) {
+            // double overallRating = reviews.stream().reduce(0, (total, a) -> total + a.getRating(), Integer::sum) / reviews.size();
+            int totalRating = reviews.stream().mapToInt(review -> review.getRating()).sum() ;
+            System.out.println("rating " + totalRating);
+            statistic.setRating(Math.round(totalRating / reviews.size()));
+        }
+
+        return statistic;
+    }
+
     private Users isCheck(Optional<Users> entity) {
         if(entity.isPresent()) {
             return entity.get();

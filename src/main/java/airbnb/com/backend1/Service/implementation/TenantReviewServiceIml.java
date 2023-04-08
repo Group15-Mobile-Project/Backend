@@ -121,7 +121,7 @@ public class TenantReviewServiceIml implements TenantReviewService {
         bookingRepos.save(booking);
 
         // Notify notify = new Notify(NotifyStatus.TENANT_REVIEW, tenant, host, home, booking, false);
-        Notify notify = new Notify(NotifyStatus.TENANT_REVIEW, tenant, host, home, false);
+        Notify notify = new Notify(NotifyStatus.TENANT_REVIEW, tenant, host, home, booking, false);
         notifyRepos.save(notify);
         
         tenant.getNotifies().add(notify);

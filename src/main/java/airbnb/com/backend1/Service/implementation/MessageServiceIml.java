@@ -95,6 +95,29 @@ public class MessageServiceIml implements MessageService {
         res.sort((a, b) -> b.getDateCreated().compareTo(a.getDateCreated()));
         return res;
     }
+
+    @Override
+    public List<MessageResponse> getAllByAuthserAndReceiver(Long receiverId) {
+        Users authUser = getAuthUser();
+        Users receiver = getReceiver(receiverId);
+        List<Chat> chats = chatRepos.findByAuthUser(authUser.getId());
+        List<Chat> chatsFilter = chats.stream().filter(chat -> {
+            Optional<Participant> entityParti = participantRepos.findByChatAndUser(chat, receiver);
+            if(entityParti.isPresent()) {
+                return true;
+            } else {
+                return false;
+            }
+        }).collect(Collectors.toList());
+        System.out.println(chatsFilter.size() + " : chatfilter size");
+        Chat chat = chatsFilter.get(0);
+        List<Message> mess = messageRepos.findByChat(chat);
+        List<MessageResponse> res = mess.stream().map(mes -> mapper.mapMessageToResponse(mes)).collect(Collectors.toList());
+        res.sort((a, b) -> b.getDateCreated().compareTo(a.getDateCreated()));
+        return res;
+    }
+
+
     private Users isCheck(Optional<Users> entity) {
         if(entity.isPresent()) {
             return entity.get();
