@@ -87,5 +87,10 @@ public class UserController {
         userService.deleteUsers(userId);
         return new ResponseEntity<>( HttpStatus.NO_CONTENT);
     }
+
+    @PutMapping("/forgotPassword")
+    public ResponseEntity<String> forgotPassword(@RequestParam String email) {
+        return new ResponseEntity<String>("forget password", HttpStatus.OK);
+    }
 }
 
