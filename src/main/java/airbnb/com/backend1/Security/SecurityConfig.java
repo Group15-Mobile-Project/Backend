@@ -49,6 +49,7 @@ public class SecurityConfig {
         http
         .authorizeHttpRequests()
         .requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
+        .requestMatchers(HttpMethod.PUT, "/api/users/forgotPassword/**").permitAll()
         .requestMatchers( "/api/images/**").permitAll()
         .requestMatchers(HttpMethod.GET ,"/api/homes/all").permitAll()
         .requestMatchers(HttpMethod.GET ,"/api/homes/search").permitAll()

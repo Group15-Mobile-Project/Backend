@@ -20,4 +20,5 @@ public interface UserService {
     UserResponse updateToAdmin(Long userId);
     UserResponse updateToHost();
     UserResponse updateUserProfile(String username, String email, String imageurl);
+    String forgotPassword(String email);
 }

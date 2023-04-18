@@ -1,6 +1,7 @@
 package airbnb.com.backend1.Service.implementation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -11,6 +12,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -51,6 +54,8 @@ public class UserServiceIml implements UserDetailsService, UserService {
     HttpServletResponse response;
     @Autowired
     HostRepos hostRepos;
+    @Autowired
+    JavaMailSender mailSender;
     @Value("${admin.key}")
     private String adminKey;
 
@@ -262,6 +267,24 @@ public class UserServiceIml implements UserDetailsService, UserService {
         return userMapper.mapUserToResponse(user);
     }
 
+    @Override
+    public String forgotPassword(String email) {
+        Optional<Users> entity = userRepos.findByEmail(email);
+        Users user = isCheck(entity);
+        String password = generateAutoPassword();
+        user.setPassword(new BCryptPasswordEncoder().encode(password));
+        userRepos.save(user);
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("BookingApp");
+        message.setTo(email);
+        message.setSubject("reset password");
+        message.setText("your new password is " + password + ", please use this password to login and change your password");
+        mailSender.send(message);
+
+        return "The new password are sent to your email successfully";
+    }
+
     private Users isCheck(Optional<Users> entity) {
         if(entity.isPresent()) {
             return entity.get();
@@ -273,5 +296,20 @@ public class UserServiceIml implements UserDetailsService, UserService {
         Optional<Users> entity = userRepos.findByUsername(username);
         Users user = isCheck(entity);
         return user;
+    }
+
+    private String generateAutoPassword() {
+        List<Integer> list = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+        String password = "";
+        int n = 0;
+        
+        while(n < 6) {
+            int randomIndex = (int)(Math.random() * (10));
+            System.out.println(randomIndex);
+            password += list.get(randomIndex);
+            n++;
+        }
+        System.out.println(password);
+        return password;
     }
 }
